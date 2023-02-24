@@ -1,2 +1,2 @@
 export * from './getMatchedfilepaths'
-export * from './parsetodos'
+export * from './parseTodos'
