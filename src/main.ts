@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {getfilePaths} from './getfilenames'
+import {getfilePaths} from './getfilepaths'
 import {grep} from './grep'
 import {parse} from './parse'
 
