@@ -1,14 +1,23 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {getfilePaths} from './getfilenames'
+import {grep} from './grep'
+import {parse} from './parse'
+
+// TODO: sample1
+// TODO: sample2
+// TODO: sample3
+// want: sample1
+// want: sample2
+// Want: sample3
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    // const ms: string = core.getInput('milliseconds')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const words = ['"TODO: "', '"Want"']
+    const result = await grep(words, 'dist')
+    const filePaths = getfilePaths(result)
+    await parse(filePaths, words)
 
     core.setOutput('time', new Date().toTimeString())
   } catch (error) {
