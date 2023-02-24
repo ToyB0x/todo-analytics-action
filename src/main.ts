@@ -1,16 +1,23 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {generateReport} from './report'
+
+// TODO: sample1
+// TODO: sample2
+// TODO: sample3
+// want: sample1
+// want: sample2
+// Want: sample3
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    // TODO: wordsのinputを有効化
+    // const words: string = core.getInput('words')
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const words = ['"TODO: "', '"Want"']
 
-    core.setOutput('time', new Date().toTimeString())
+    const report = await generateReport(words)
+
+    core.debug(JSON.stringify(report))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
