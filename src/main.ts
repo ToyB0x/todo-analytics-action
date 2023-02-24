@@ -1,7 +1,5 @@
 import * as core from '@actions/core'
-import {getfilePaths} from './getfilepaths'
-import {grep} from './grep'
-import {parse} from './parse'
+import {generateReport} from './report'
 
 // TODO: sample1
 // TODO: sample2
@@ -12,14 +10,14 @@ import {parse} from './parse'
 
 async function run(): Promise<void> {
   try {
-    // const ms: string = core.getInput('milliseconds')
+    // TODO: wordsのinputを有効化
+    // const words: string = core.getInput('words')
 
     const words = ['"TODO: "', '"Want"']
-    const result = await grep(words, 'dist')
-    const filePaths = getfilePaths(result)
-    await parse(filePaths, words)
 
-    core.setOutput('time', new Date().toTimeString())
+    const report = await generateReport(words)
+
+    core.debug(JSON.stringify(report))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
