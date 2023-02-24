@@ -6,32 +6,30 @@ export const grep = async (
   words: string[],
   ignorePath: string
 ): Promise<string> => {
-  // TODO: handle error
-  let myOutput = ''
-  // let myError = ''
-
+  let output = ''
   const options: ExecOptions = {
-    silent: true,
     listeners: {
       stdout: (data: Buffer) => {
-        myOutput += data.toString()
+        output += data.toString()
       }
-      // stderr: (data: Buffer) => {
-      //   myError += data.toString()
-      // }
     }
   }
 
   try {
-    const targets = words.join('|')
-    // await exec(`git grep --ignore-case "TODO" -- ':!dist/'`)
     await exec(
       'git',
-      ['grep', '--ignore-case', targets, '--', `:!${ignorePath}/`],
+      [
+        'grep',
+        '--files-with-matches',
+        '--ignore-case',
+        ...words.map(word => ['-e', word]).flat(),
+        '--',
+        `:!${ignorePath}/`
+      ],
       options
     )
 
-    return myOutput
+    return output
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
     core.debug('error')
