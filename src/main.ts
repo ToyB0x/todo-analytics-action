@@ -13,11 +13,11 @@ async function run(): Promise<void> {
     // TODO: wordsのinputを有効化
     // const words: string = core.getInput('words')
 
-    const words = ['"TODO: "', '"Want"']
+    const words = ['TODO', 'WANT']
 
     const report = await generateReport(words)
-
-    core.debug(JSON.stringify(report))
+    core.setOutput('report', report)
+    core.debug(process.env.GITHUB_REPOSITORY as string)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
